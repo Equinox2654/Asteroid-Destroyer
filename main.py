@@ -24,6 +24,7 @@ while constants.running:
     screen.fill((0, 0, 0))
 
     dt = pygame.time.get_ticks() / 1000.0
+    pygame.time.tick(60)
 
     pygame.display.flip()
 
