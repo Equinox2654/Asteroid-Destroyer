@@ -10,6 +10,7 @@ def main():
     print(f"Screen height: {constants.SCREEN_HEIGHT}")
 
 screen = pygame.display.set_mode((constants.SCREEN_WIDTH, constants.SCREEN_HEIGHT))
+dt = 0
 
 #Main Game Loop
 while constants.running:
@@ -21,6 +22,8 @@ while constants.running:
             constants.running = False
 
     screen.fill((0, 0, 0))
+
+    dt = pygame.time.get_ticks() / 1000.0
 
     pygame.display.flip()
 
