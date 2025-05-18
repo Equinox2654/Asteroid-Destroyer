@@ -3,6 +3,7 @@
 # throughout this file
 import pygame
 import constants
+from player import Player
 
 def main():
     print("Starting Asteroids!")
@@ -23,8 +24,11 @@ while constants.running:
 
     screen.fill((0, 0, 0))
 
+    """Game Code below here"""
+    player = Player(constants.SCREEN_WIDTH / 2, constants.SCREEN_HEIGHT / 2)
+    player.draw(screen)
+
     dt = pygame.time.get_ticks() / 1000.0
-    pygame.time.tick(60)
 
     pygame.display.flip()
 
