@@ -33,7 +33,7 @@ end
 # Unset irrelevant variables.
 deactivate nondestructive
 
-set -gx VIRTUAL_ENV /mnt/c/Users/thibi/Onedrive/documents/coding/bootdev-asteroids-game/venv
+set -gx VIRTUAL_ENV /mnt/c/Users/thibi/OneDrive/documents/coding/bootdev-asteroids-game/venv
 
 set -gx _OLD_VIRTUAL_PATH $PATH
 set -gx PATH "$VIRTUAL_ENV/"bin $PATH

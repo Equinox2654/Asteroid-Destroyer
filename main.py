@@ -5,13 +5,13 @@ import pygame
 import constants
 from player import Player
 
+screen = pygame.display.set_mode((constants.SCREEN_WIDTH, constants.SCREEN_HEIGHT))
+
 def main():
     print("Starting Asteroids!")
     print(f"Screen width: {constants.SCREEN_WIDTH}")
     print(f"Screen height: {constants.SCREEN_HEIGHT}")
 
-    screen = pygame.display.set_mode((constants.SCREEN_WIDTH, constants.SCREEN_HEIGHT))
-    dt = 0
     player = Player(constants.SCREEN_WIDTH / 2, constants.SCREEN_HEIGHT / 2)
 
     #Main Game Loop
@@ -24,13 +24,15 @@ def main():
                 constants.running = False
 
         screen.fill((0, 0, 0))
+        dt = pygame.time.get_ticks() / 1000.0
 
         """Game Code below here"""
         player.update(dt)
         player.draw(screen)
 
-        #pygame.time.Clock.tick(60)  # Limit to 60 FPS
-        dt = pygame.time.get_ticks() / 1000.0
+        #Fix this later
+        #pygame.Clock.tick(60.0)  # Limit to 60 FPS
+
 
         pygame.display.flip()
 
