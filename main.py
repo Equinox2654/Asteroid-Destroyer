@@ -7,13 +7,18 @@ from player import Player
 
 screen = pygame.display.set_mode((constants.SCREEN_WIDTH, constants.SCREEN_HEIGHT))
 clock = pygame.time.Clock()
+player = Player(constants.SCREEN_WIDTH / 2, constants.SCREEN_HEIGHT / 2)
+updatable = pygame.sprite.Group()
+drawable = pygame.sprite.Group()
+updatable.add(player)
+drawable.add(player)
+
+
 
 def main():
     print("Starting Asteroids!")
     print(f"Screen width: {constants.SCREEN_WIDTH}")
     print(f"Screen height: {constants.SCREEN_HEIGHT}")
-
-    player = Player(constants.SCREEN_WIDTH / 2, constants.SCREEN_HEIGHT / 2)
 
     #Main Game Loop
     while constants.running:
@@ -28,12 +33,12 @@ def main():
         dt = clock.tick(60) / 1000.0  # seconds since last frame
 
         """Game Code below here"""
-        player.update(dt)
-        player.draw(screen)
+        updatable.update(dt)
+        for d in drawable:
+            d.draw(screen)
 
         #Fix this later
         clock.tick(60)
-
 
         pygame.display.flip()
 
