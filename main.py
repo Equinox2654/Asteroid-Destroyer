@@ -48,6 +48,10 @@ def main():
             if player.collide(a):
                 print("Game Over!")
                 running = False
+            for s in updatable:
+                if isinstance(s, Shot) and a.collide(s):
+                    a.split()
+                    s.kill()
 
         #Fix this later
         clock.tick(60)
