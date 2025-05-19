@@ -33,7 +33,7 @@ def main():
         
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
-                break
+                running = False
 
         screen.fill((0, 0, 0))
         dt = clock.tick(60) / 1000.0  # seconds since last frame
@@ -42,6 +42,11 @@ def main():
         updatable.update(dt)
         for d in drawable:
             d.draw(screen)
+        
+        for a in asteroids:
+            if player.collide(a):
+                print("Game Over!")
+                running = False
 
         #Fix this later
         clock.tick(60)
