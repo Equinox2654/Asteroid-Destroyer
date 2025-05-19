@@ -6,6 +6,7 @@ import constants
 from player import Player
 
 screen = pygame.display.set_mode((constants.SCREEN_WIDTH, constants.SCREEN_HEIGHT))
+clock = pygame.time.Clock()
 
 def main():
     print("Starting Asteroids!")
@@ -24,14 +25,14 @@ def main():
                 constants.running = False
 
         screen.fill((0, 0, 0))
-        dt = pygame.time.get_ticks() / 1000.0
+        dt = clock.tick(60) / 1000.0  # seconds since last frame
 
         """Game Code below here"""
         player.update(dt)
         player.draw(screen)
 
         #Fix this later
-        #pygame.Clock.tick(60.0)  # Limit to 60 FPS
+        clock.tick(60)
 
 
         pygame.display.flip()
