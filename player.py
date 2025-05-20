@@ -64,7 +64,7 @@ class Player(CircleShape):
     def kill(self):
         if self.spawn_timer == 0:
             self.lives -= 1
-            self.spawn_timer = 1.5
+            self.spawn_timer = PLAYER_SPAWN_IMMUNITY_MAX
             self.colour = (255, 0, 0)
 
             if self.lives <= 0:

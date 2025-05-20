@@ -7,7 +7,6 @@ from player import Player
 from asteroid import Asteroid
 from asteroidfield import AsteroidField
 from shot import Shot
-from text import Text
 
 screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 clock = pygame.time.Clock()
@@ -20,7 +19,6 @@ AsteroidField.containers = (updatable)
 player = Player(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2)
 asteroid_field = AsteroidField()
 Shot.containers = (updatable, drawable)
-Text.containers = (drawable)
 
 
 
@@ -42,6 +40,10 @@ def main():
             if event.type == pygame.QUIT:
                 running = False
 
+        if pygame.key.get_pressed()[pygame.K_ESCAPE]:
+            running = False
+            print("Exiting game...")
+
         screen.fill((0, 0, 0))
         dt = clock.tick(60) / 1000.0  # seconds since last frame
 
@@ -52,7 +54,6 @@ def main():
         # Draw the text
         screen.blit(text, (10, 10))
         screen.blit(text_2, (10, 50))
-        
 
         updatable.update(dt)
         for d in drawable:
@@ -62,9 +63,10 @@ def main():
             if player.collide(a):
                 if player.lives > 0:
                     player.kill()
-                    print(f"Player lives left: {player.lives}")
+                    if player.spawn_timer == 0:
+                        print(f"Player lives left: {player.lives}")
                     text_2 = font.render(f"Player Lives: {player.lives}", True, (255, 255, 255))
-                    a.kill()
+                    a.split()
                 if player.lives == 0:
                     print("Game Over!")
                     print("GG!")
