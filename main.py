@@ -43,15 +43,15 @@ def main():
                 running = False
 
         screen.fill((0, 0, 0))
-        dt = pygame.time.get_ticks() / 1000.0  # seconds since last frame
+        dt = clock.tick(60) / 1000.0  # seconds since last frame
 
         """Game Code below here"""
 
         pygame.display.set_caption("Asteroid Destroyer")
 
         # Draw the text
-        text.draw(screen, 10, 10)
-        text_2.draw(screen, 10, 50)
+        screen.blit(text, (10, 10))
+        screen.blit(text_2, (10, 50))
         
 
         updatable.update(dt)
