@@ -10,6 +10,9 @@ class Player(CircleShape):
         super().__init__(x, y , PLAYER_RADIUS)
         self.rotation = 0
         self.cooldown = 0
+        self.lives = 3
+        self.spawn_timer = PLAYER_SPAWN_IMMUNITY
+        self.colour = (255, 255, 255)
     
     # in the player class
     def triangle(self):
@@ -21,7 +24,7 @@ class Player(CircleShape):
         return [a, b, c]
     
     def draw(self, screen):
-        pygame.draw.polygon(screen, (255, 255, 255), self.triangle(), 2)
+        pygame.draw.polygon(screen, self.colour, self.triangle(), 2)
 
     def rotate(self, dt):
          self.rotation += PLAYER_TURN_SPEED * dt
@@ -53,4 +56,17 @@ class Player(CircleShape):
         self.cooldown -= dt
         if self.cooldown < 0:
             self.cooldown = 0
+        self.spawn_timer -= dt
+        if self.spawn_timer < 0:
+            self.spawn_timer = 0
+            self.colour = (255, 255, 255)
+
+    def kill(self):
+        if self.spawn_timer == 0:
+            self.lives -= 1
+            self.spawn_timer = 1.5
+            self.colour = (255, 0, 0)
+
+            if self.lives <= 0:
+                super().kill()
         
