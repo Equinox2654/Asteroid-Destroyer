@@ -7,20 +7,24 @@ from player import Player
 from asteroid import Asteroid
 from asteroidfield import AsteroidField
 from shot import Shot
+from power_ups import PowerUp
+from power_up_container import PowerUpContainer
+from shoot_speed_buff import ShootSpeedBuff
 
-screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 clock = pygame.time.Clock()
 updatable = pygame.sprite.Group()
 drawable = pygame.sprite.Group()
 asteroids = pygame.sprite.Group()
+none = pygame.sprite.Group()
 Player.containers = (updatable, drawable)
 Asteroid.containers = (updatable, drawable, asteroids)
 AsteroidField.containers = (updatable)
 player = Player(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2)
 asteroid_field = AsteroidField()
 Shot.containers = (updatable, drawable)
-
-
+PowerUpContainer.containers = (updatable)
+ShootSpeedBuff.containers = (none,)
+powerUps = PowerUpContainer()
 
 def main():
     pygame.init()
@@ -79,8 +83,11 @@ def main():
                     s.kill()
                     asteroids_killed += 1
                     text = font.render(f"Asteroids Destroyed: {asteroids_killed}", True, (255, 255, 255))
-
-        #Fix this later
+                if isinstance(s, PowerUp) and player.collide(s):
+                    s.activate(player)
+                    s.kill()
+                    print("Power-up activated!")
+                    
         clock.tick(60)
 
         pygame.display.flip()

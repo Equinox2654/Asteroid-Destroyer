@@ -12,7 +12,7 @@ class Player(CircleShape):
         self.cooldown = 0
         self.lives = 3
         self.spawn_timer = PLAYER_SPAWN_IMMUNITY
-        self.colour = (255, 255, 255)
+        self.colour = (0, 255, 0)
     
     # in the player class
     def triangle(self):
@@ -23,17 +23,26 @@ class Player(CircleShape):
         c = self.position - forward * self.radius + right
         return [a, b, c]
     
+    def player_speed_mult(self):
+        if GAME_RUNTIME / 100 < 1:
+            PLAYER_SPEED_MULT = 1
+        elif GAME_RUNTIME / 100 < 3:
+            PLAYER_SPEED_MULT = 1 * GAME_RUNTIME / 100
+        else:
+            PLAYER_SPEED_MULT = 3
+        return PLAYER_SPEED_MULT
+    
     def draw(self, screen):
         pygame.draw.polygon(screen, self.colour, self.triangle(), 2)
 
     def rotate(self, dt):
-         self.rotation += PLAYER_TURN_SPEED * dt
+         self.rotation += PLAYER_TURN_SPEED * dt * PLAYER_SPEED_MULT
     
     def move(self, dt):
         forward = pygame.Vector2(0, 1).rotate(self.rotation)
-        self.position += forward * PLAYER_SPEED * dt
+        self.position += forward * PLAYER_SPEED * dt * PLAYER_SPEED_MULT
     
-    def shoot(self):
+    def shoot(self): 
         vector = pygame.Vector2(0, 1).rotate(self.rotation) * PLAYER_SHOOT_SPEED
         if self.cooldown <= 0:
             bullet = Shot(self.position.x, self.position.y, vector)
@@ -41,6 +50,8 @@ class Player(CircleShape):
 
     def update(self, dt):
         keys = pygame.key.get_pressed()
+
+        PLAYER_SPEED_MULT = self.player_speed_mult()
 
         if keys[pygame.K_a]:
             self.rotate(-dt)
@@ -59,7 +70,7 @@ class Player(CircleShape):
         self.spawn_timer -= dt
         if self.spawn_timer < 0:
             self.spawn_timer = 0
-            self.colour = (255, 255, 255)
+            self.colour = (0, 255, 0)
 
     def kill(self):
         if self.spawn_timer == 0:
